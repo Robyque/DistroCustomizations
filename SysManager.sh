@@ -317,6 +317,8 @@ minimal(){
         'dolphin' #file manager
         #'thunar' #file manager
         'flatpak'
+        'lightdm'
+        'lightdm-gtk-greeter'
     )
     for PKG in "${PKGS[@]}"; do
       echo "Installing: ${PKG} using pacman"
