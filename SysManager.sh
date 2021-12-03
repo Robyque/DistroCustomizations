@@ -343,7 +343,7 @@ minimal(){
     )
     for PPKG in "${PPKGS[@]}"; do
         echo "Installing: ${PPKG} using pacman"
-        sudo pacman -S "$PPKG" --nonconfirm --needed
+        sudo pacman -S "$PPKG" --noconfirm --needed
     done
     #enabling services
     sudo systemctl enable lightdm.service
@@ -392,7 +392,7 @@ gameing(){
     )
      for PPKG in "${PPKGS[@]}"; do
         echo "Installing: ${PPKG} using pacman"
-        sudo pacman -S "$PPKG" --nonconfirm --needed
+        sudo pacman -S "$PPKG" --noconfirm --needed
      done
 
 
@@ -420,7 +420,7 @@ art(){
     )
      for PKG in "${PKGS[@]}"; do
         echo "Installing: ${PKG} using pacman"
-        sudo pacman -S "$PKG" --nonconfirm --needed
+        sudo pacman -S "$PKG" --noconfirm --needed
      done
 
 }
@@ -443,7 +443,7 @@ virtualization(){
     )
      for PKG in "${PKGS[@]}"; do
         echo "Installing: ${PKG} using pacman"
-        sudo pacman -S "$PKG" --nonconfirm --needed
+        sudo pacman -S "$PKG" --noconfirm --needed
      done
 
     #Warning user to sudo chmod +x for using external hard drives
@@ -475,7 +475,7 @@ programing(){
     )
      for PPKG in "${PPKGS[@]}"; do
         echo "Installing: ${PPKG} using pacman"
-        sudo pacman -S "$PPKG" --nonconfirm --needed
+        sudo pacman -S "$PPKG" --noconfirm --needed
     done
 
     #flatpak apps
@@ -499,7 +499,7 @@ terminals(){
     )
      for PKG in "${PKGS[@]}"; do
         echo "Installing: ${PKG} using pacman"
-        sudo pacman -S "$PKG" --nonconfirm --needed
+        sudo pacman -S "$PKG" --noconfirm --needed
     done
 
 }
@@ -515,7 +515,7 @@ browsers(){
     )
      for PKG in "${PKGS[@]}"; do
         echo "Installing: ${PKG} using pacman"
-        sudo pacman -S "$PKG" --nonconfirm --needed
+        sudo pacman -S "$PKG" --noconfirm --needed
     done
 
 
@@ -527,7 +527,7 @@ unixporn(){
     )
      for PPKG in "${PPKGS[@]}"; do
         echo "Installing: ${PPKG} using pacman"
-        sudo pacman -S "$PPKG" --nonconfirm --needed
+        sudo pacman -S "$PPKG" --noconfirm --needed
     done
 
     #yay(AUR)
