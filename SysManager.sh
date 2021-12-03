@@ -316,11 +316,18 @@ minimal(){
         'alacritty' #terminal
         'dolphin' #file manager
         #'thunar' #file manager
+        'flatpak'
     ]
     for PKG in "${PKGS}"; do
       echo "Installing: ${PKG} using pacman"
       sudo pacman -S "${PKG}" --noconfirm --needed
     done
+    #yay(AUR)
+    #installing yay
+    echo "installing yay...."
+    git clone  https://aur.archlinux.org/yay.git
+    cd yay
+    makepkg -si
 }
 normal(){
     #pacman
@@ -373,26 +380,12 @@ normal(){
         echo "Installing: ${FPKG} using flatpak"
         sudo flatpak install "$FPKG"
     done
-
     #yay(AUR)
     #installing yay
-    echo "Installing git...."
-    sudo pacman -S
     echo "installing yay...."
     git clone  https://aur.archlinux.org/yay.git
     cd yay
     makepkg -si
-
-    #packages
-    YPKGS=(
-        'pixterm'
-       )
-    for YPKG in "${YPKGS[@]}"; do
-        echo "Installing: ${YPKG} using yay"
-        sudo yay "$YPKG"
-    done
-
-
 }
 gameing(){
     #pacman app list
@@ -534,7 +527,7 @@ browsers(){
 
 }
 unixporn(){
-    echo "Install manually this packages because with this script for now it's not working"
+    echo "Some of the apps need manual install for the moment."
     #pacman
     PPKGS=(
         'conky-manager'
@@ -550,11 +543,12 @@ unixporn(){
         'tty-clock'
         'pipes'
         'pfetch'
+        'pixterm'
     )
     #all the tools for making linux rice
     #like cava ttk-clock pipes pfetch feh
     for YPKG in "${YPKGS[@]}"; do
-        echo YPKG
+        echo "Install ${YPKG} manually with yay"
     done
 
 }
