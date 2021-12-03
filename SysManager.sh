@@ -304,7 +304,7 @@ What?:
         1)ofde_menu ;;
         2)usde_menu ;;
         3)twm_menu ;;
-        4) system_menu ;;
+        4) install_menu ;;
         5) menu ;;
         6) exit 0 ;;
     esac
