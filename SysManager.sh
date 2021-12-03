@@ -312,7 +312,7 @@ What?:
 #<Post install>
 minimal(){
     #pacman
-    P_PKGS = [
+    PPKGS = [
         'firefox' #browser default
         'alacritty' #default terminal
         'dolphin' #default file manager
@@ -341,14 +341,14 @@ minimal(){
         'lightdm-gtk-greeter'
         'flatpak' #pacakge manager
     ]
-    for PPKG in "${P_PKGS[@]}"; do
+    for PPKG in "${PPKGS[@]}"; do
         echo "Installing: ${PPKG} using pacman"
         sudo pacman -S "${PPKG}"
     done
     #enabling services
     sudo systemctl enable lightdm.service
     #flatpak
-    F_PKGS = [
+    FPKGS = [
         're.sonny.Tangram' #tangram
         'com.spotify.Client' #spotify
         'us.zoom.Zoom' #zoom client
@@ -356,7 +356,7 @@ minimal(){
         'com.github.alainm23.planner' #efficiency app
 
     ]
-    for FPKG in "${F_PKGS[@]}"; do
+    for FPKG in "${FPKGS[@]}"; do
         echo "Installing: ${FPKG} using flatpak"
         sudo flatpak install "${FPKG}"
     done
@@ -371,11 +371,11 @@ minimal(){
     makepkg -si
 
     #packages
-    Y_PKGS = [
+    YPKGS = [
         'pixterm'
         'aura-bin'
     ]
-    for YPKG in "${Y_PKGS[@]}"; do
+    for YPKG in "${YPKGS[@]}"; do
         echo "Installing: ${YPKG} using yay"
         sudo yay "${YPKG}"
     done
@@ -384,26 +384,26 @@ minimal(){
 }
 gameing(){
     #pacman app list
-    P_PKGS = [
+    PPKGS = [
         'discord'
         'discord-canary'
         'steam-native'
         'lutris'
         'winetricks'
     ]
-     for PPKG in "${P_PKGS[@]}"; do
+     for PPKG in "${PPKGS[@]}"; do
         echo "Installing: ${PPKG} using pacman"
         sudo pacman -S "${PPKG}"
     done
 
 
     #flatpak app list
-    F_PKGS = [
+    FPKGS = [
       'io.mrarm.mcpelauncher' #minecraft bedrock launcher for linux
       'com.github.Matoking.protontricks' #like winetricks but for proton
       'com.valvesoftware.Steam' #steam game launcher
     ]
-     for FPKG in "${F_PKGS[@]}"; do
+     for FPKG in "${FPKGS[@]}"; do
         echo "Installing: ${FPKG} using flatpak"
         sudo flatpak install "${FPKG}"
     done
@@ -462,7 +462,7 @@ virtualization(){
 }
 programing(){
     #pacman apps
-    P_PKGS = [
+    PPKGS = [
         'cmake'
         'atom'
         'kate'
@@ -474,18 +474,18 @@ programing(){
         'qtcreator'
 
     ]
-     for PPKG in "${P_PKGS[@]}"; do
+     for PPKG in "${PPKGS[@]}"; do
         echo "Installing: ${PPKG} using pacman"
         sudo pacman -S "${PPKG}"
     done
 
     #flatpak apps
-    F_PKGS = [
+    FPKGS = [
         'com.sublimetext.three' #sublime text editor
         'org.eclipse.Java' #eclipse ide for java
         'com.visualstudio.code' #visual studio code
     ]
-     for FPKG in "${F_PKGS[@]}"; do
+     for FPKG in "${FPKGS[@]}"; do
         echo "Installing: ${FPKG} using flatpak"
         sudo flatpak install "${FPKG}"
     done
@@ -523,16 +523,16 @@ browsers(){
 }
 unixporn(){
     #pacman
-    P_PKGS = [
+    PPKGS = [
         'conky-manager'
     ]
-     for PPKG in "${P_PKGS[@]}"; do
+     for PPKG in "${PPKGS[@]}"; do
         echo "Installing: ${PPKG} using pacman"
         sudo pacman -S "${PPKG}"
     done
 
     #yay(AUR)
-    Y_PKGS = [
+    YPKGS = [
         'cava'
         'tty-clock'
         'pipes'
@@ -540,7 +540,7 @@ unixporn(){
     ]
     #all the tools for making linux rice
     #like cava ttk-clock pipes pfetch feh
-    for YPKG in "${Y_PKGS[@]}"; do
+    for YPKG in "${YPKGS[@]}"; do
         echo "Installing: ${YPKG} using yay"
         sudo yay "${YPKG}"
     done
