@@ -521,6 +521,7 @@ browsers(){
 
 }
 unixporn(){
+    echo "Install manually this packages because with this script for now it's not working"
     #pacman
     PPKGS=(
         'conky-manager'
@@ -540,8 +541,7 @@ unixporn(){
     #all the tools for making linux rice
     #like cava ttk-clock pipes pfetch feh
     for YPKG in "${YPKGS[@]}"; do
-        echo "Installing: ${YPKG} using yay"
-        sudo yay "$YPKG"
+        echo YPKG
     done
 
 }
