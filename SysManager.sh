@@ -318,7 +318,7 @@ minimal(){
         #'thunar' #file manager
         'flatpak'
     ]
-    for PKG in "${PKGS}"; do
+    for PKG in "${PKGS[@]}"; do
       echo "Installing: ${PKG} using pacman"
       sudo pacman -S "${PKG}" --noconfirm --needed
     done
