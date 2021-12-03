@@ -324,6 +324,8 @@ minimal(){
       echo "Installing: ${PKG} using pacman"
       sudo pacman -S "${PKG}" --noconfirm --needed
     done
+    #enabling services
+    sudo systemctl enable lightdm.service
     #yay(AUR)
     #installing yay
     echo "installing yay...."
