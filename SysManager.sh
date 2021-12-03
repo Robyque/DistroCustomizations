@@ -311,11 +311,24 @@ What?:
 }
 #<Post install>
 minimal(){
+    PKGS = [
+        'firefox' #browser
+        'alacritty' #terminal
+        'dolphin' #file manager
+        #'thunar' #file manager
+    ]
+    for PKG in "${PKGS}"; do
+      echo "Installing: ${PKG} using pacman"
+      sudo pacman -S "${PKG}" --noconfirm --needed
+    done
+}
+normal(){
     #pacman
     PPKGS=(
         'firefox' #browser default
         'alacritty' #default terminal
         'dolphin' #default file manager
+        #'thunar' #file manager
         'engrampa' #archive manager
         'vlc' #video player
         'nomacs' #image viewer
@@ -550,16 +563,17 @@ install_menu(){
 -------------------------------------------------
 |1) Desktop Enviroment & Window managers menu   |
 |2) Minimal instalation                         |
-|3) Gaming apps                                 |
-|4) Art apps                                    |
-|5) Virtualization Apps                         |
-|6) Programing Apps                             |
-|7) Terminals                                   |
-|8) Browsers                                    |
-|9) Linux Rice                                  |
-|10) Back                                       |
-|11) Main menu                                  |
-|12) Exit                                       |
+|3) Normal instalation                          |
+|4) Gaming apps                                 |
+|5) Art apps                                    |
+|6) Virtualization Apps                         |
+|7) Programing Apps                             |
+|8) Terminals                                   |
+|9) Browsers                                    |
+|10) Linux Rice                                 |
+|11) Back                                       |
+|12) Main menu                                  |
+|13) Exit                                       |
 -------------------------------------------------
 What?:
 "
@@ -567,16 +581,17 @@ What?:
     case $a in
         1) de_wm_menu;;
         2) minimal ; install_menu ;;
-        3) gameing ; install_menu ;;
-        4) art ; install_menu ;;
-        5) virtualization ; install_menu ;;
-        6) programing ; install_menu ;;
-        7) terminals ; install_menu ;;
-        8) browsers ; install_menu ;;
-        9) unixporn ; install_menu ;;
-        10) system_menu ;;
-        11) menu ;;
-        12) exit 0 ;;
+        3) normal ; install_menu ;;
+        4) gameing ; install_menu ;;
+        5) art ; install_menu ;;
+        6) virtualization ; install_menu ;;
+        7) programing ; install_menu ;;
+        8) terminals ; install_menu ;;
+        9) browsers ; install_menu ;;
+        10) unixporn ; install_menu ;;
+        11) system_menu ;;
+        12) menu ;;
+        13) exit 0 ;;
     esac
 
 }
