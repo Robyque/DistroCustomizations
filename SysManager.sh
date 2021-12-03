@@ -311,13 +311,13 @@ What?:
 }
 #<Post install>
 minimal(){
-    PKGS = [
+    PKGS=(
         'firefox' #browser
         'alacritty' #terminal
         'dolphin' #file manager
         #'thunar' #file manager
         'flatpak'
-    ]
+    )
     for PKG in "${PKGS[@]}"; do
       echo "Installing: ${PKG} using pacman"
       sudo pacman -S "${PKG}" --noconfirm --needed
