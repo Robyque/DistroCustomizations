@@ -343,7 +343,7 @@ minimal(){
     ]
     for PPKG in "${PPKGS[@]}"; do
         echo "Installing: ${PPKG} using pacman"
-        sudo pacman -S "${PPKG}"
+        sudo pacman -S "$PPKG"
     done
     #enabling services
     sudo systemctl enable lightdm.service
@@ -358,7 +358,7 @@ minimal(){
     ]
     for FPKG in "${FPKGS[@]}"; do
         echo "Installing: ${FPKG} using flatpak"
-        sudo flatpak install "${FPKG}"
+        sudo flatpak install "$FPKG"
     done
 
     #yay(AUR)
@@ -377,7 +377,7 @@ minimal(){
     ]
     for YPKG in "${YPKGS[@]}"; do
         echo "Installing: ${YPKG} using yay"
-        sudo yay "${YPKG}"
+        sudo yay "$YPKG"
     done
 
 
@@ -393,8 +393,8 @@ gameing(){
     ]
      for PPKG in "${PPKGS[@]}"; do
         echo "Installing: ${PPKG} using pacman"
-        sudo pacman -S "${PPKG}"
-    done
+        sudo pacman -S "$PPKG"
+     done
 
 
     #flatpak app list
@@ -405,8 +405,8 @@ gameing(){
     ]
      for FPKG in "${FPKGS[@]}"; do
         echo "Installing: ${FPKG} using flatpak"
-        sudo flatpak install "${FPKG}"
-    done
+        sudo flatpak install "$FPKG"
+     done
 
 }
 art(){
@@ -421,8 +421,8 @@ art(){
     ]
      for PKG in "${PKGS[@]}"; do
         echo "Installing: ${PKG} using pacman"
-        sudo pacman -S "${PKG}"
-    done
+        sudo pacman -S "$PKG"
+     done
 
 }
 virtualization(){
@@ -444,8 +444,8 @@ virtualization(){
     ]
      for PKG in "${PKGS[@]}"; do
         echo "Installing: ${PKG} using pacman"
-        sudo pacman -S "${PKG}"
-    done
+        sudo pacman -S "$PKG"
+     done
 
     #Warning user to sudo chmod +x for using external hard drives
     echo "To user external hard drives use 'sudo chmod +x /run/media/user/drive'
@@ -476,7 +476,7 @@ programing(){
     ]
      for PPKG in "${PPKGS[@]}"; do
         echo "Installing: ${PPKG} using pacman"
-        sudo pacman -S "${PPKG}"
+        sudo pacman -S "$PPKG"
     done
 
     #flatpak apps
@@ -487,7 +487,7 @@ programing(){
     ]
      for FPKG in "${FPKGS[@]}"; do
         echo "Installing: ${FPKG} using flatpak"
-        sudo flatpak install "${FPKG}"
+        sudo flatpak install "$FPKG"
     done
 
 }
@@ -500,7 +500,7 @@ termianls(){
     ]
      for PKG in "${PKGS[@]}"; do
         echo "Installing: ${PKG} using pacman"
-        sudo pacman -S "${PKG}"
+        sudo pacman -S "$PKG"
     done
 
 }
@@ -516,7 +516,7 @@ browsers(){
     ]
      for PKG in "${PKGS[@]}"; do
         echo "Installing: ${PKG} using pacman"
-        sudo pacman -S "${PKG}"
+        sudo pacman -S "$PKG"
     done
 
 
@@ -528,7 +528,7 @@ unixporn(){
     ]
      for PPKG in "${PPKGS[@]}"; do
         echo "Installing: ${PPKG} using pacman"
-        sudo pacman -S "${PPKG}"
+        sudo pacman -S "$PPKG"
     done
 
     #yay(AUR)
@@ -542,7 +542,7 @@ unixporn(){
     #like cava ttk-clock pipes pfetch feh
     for YPKG in "${YPKGS[@]}"; do
         echo "Installing: ${YPKG} using yay"
-        sudo yay "${YPKG}"
+        sudo yay "$YPKG"
     done
 
 }
