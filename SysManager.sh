@@ -319,6 +319,9 @@ minimal(){
         'flatpak'
         'lightdm'
         'lightdm-gtk-greeter'
+        'htop'
+        'neofetch'
+        'xorg-server'
     )
     for PKG in "${PKGS[@]}"; do
       echo "Installing: ${PKG} using pacman"
