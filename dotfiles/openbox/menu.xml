@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openbox_menu xmlns="http://openbox.org/3.4/menu">
+
+<menu id="apps-accessories-menu" label="Accessories">
+  <item label="Calculator">
+    <action name="Execute">
+      <command>gnome-calculator</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Character Map">
+    <action name="Execute">
+      <command>gnome-character-map</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Ark File Archiver">
+    <action name="Execute">
+      <command>ark</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+</menu>
+
+<menu id="apps-editors-menu" label="Editors">
+  <item label="Visual studio">
+    <action name="Execute">
+      <command>code</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+        <wmclass>GVim</wmclass>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Emacs">
+    <action name="Execute">
+      <command>emacs</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+        <wmclass>Emacs</wmclass>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Pycharm">
+    <action name="Execute">
+      <command>pycharm</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Atom">
+    <action name="Execute">
+      <command>atom</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="GVim">
+    <action name="Execute">
+      <command>gvim</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Eclipse">
+    <action name="Execute">
+      <command>eclipse</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+    <item label="Sublime Text">
+    <action name="Execute">
+      <command>flatpak run com.sublimetext.three</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+    <item label="Kate">
+    <action name="Exexute">
+      <command>kate</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+    </item>
+      <item label="Code::Blocks">
+    <action name="Execute">
+      <command>codeblocks</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+</menu>
+
+<menu id="apps-term-menu" label="Terminals">
+  <item label="Alacritty">
+    <action name="Execute">
+      <command>alacritty</command>
+    </action>
+  </item>
+  <item label="Cool Retro Term">
+    <action name="Execute">
+      <command>cool-retro-term</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Kitty Terminal">
+    <action name="Execute">
+      <command>kitty</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+</menu>
+
+<menu id="apps-net-menu" label="Browsers">
+  <item label="Vivaldi">
+    <action name="Execute">
+      <command>vivaldi-stable</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+        <wmclass>Firefox</wmclass>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Firefox">
+    <action name="Execute">
+      <command>firefox</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+        <wmclass>Opera</wmclass>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Opera">
+    <action name="Execute">
+      <command>opera</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Chromium">
+    <action name="Execute">
+      <command>chromium</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Qutebrowser">
+    <action name="Execute">
+      <command>qutebrowser</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Tangram">
+    <action name="Execute">
+      <command>flatpak run re.sonny.Tangram</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+</menu>
+
+<menu id="apps-office-menu" label="Office">
+  <item label="LibreOffice DataBase">
+    <action name="Execute">
+      <command>libreoffice -base</command>
+    </action>
+  </item>
+  <item label="libreOffice Calc">
+    <action name="Execute">
+      <command>libreoffice -calc</command>
+    </action>
+  </item>
+  <item label="LibreOffice Draw">
+    <action name="Execute">
+      <command>libreoffice -draw</command>
+    </action>
+  </item>
+  <item label="LibreOffice Impress">
+    <action name="Execute">
+      <command>libreoffice -impress</command>
+    </action>
+  </item>
+  <item label="LibreOffice Math">
+    <action name="Execute">
+      <command>libreoffice -math</command>
+    </action>
+  </item>
+  <item label="LibreOffice Printer Administration">
+    <action name="Execute">
+      <command>libreoffice -printeradmin</command>
+    </action>
+  </item>
+  <item label="LibreOffice Writer">
+    <action name="Execute">
+      <command>libreoffice -writer</command>
+    </action>
+  </item>
+</menu>
+
+<menu id="apps-multimedia-menu" label="Gaming">
+  <item label="Discord Canary">
+    <action name="Execute">
+      <command>discord-canary</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Discord">
+    <action name="Execute">
+      <command>discord</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Steam(Runtime)">
+    <action name="Execute">
+      <command>steam-runtime</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Steam">
+    <action name="Execute">
+      <command>steam</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+        <wmclass>MPlayer</wmclass>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Lutris">
+    <action name="Execute">
+      <command>lutris</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+</menu>
+
+<menu id="apps-fileman-menu" label="">
+  <item label="Nautilus">
+    <action name="Execute">
+      <command>nautilus --no-desktop --browser</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Thunar">
+    <action name="Execute">
+      <command>Thunar</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="KDE File Manager">
+    <action name="Execute">
+      <command>kfmclient openURL ~</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Rox">
+    <action name="Execute">
+      <command>rox</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+        <wmclass>ROX-Filer</wmclass>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="PCMan File Manager">
+    <action name="Execute">
+      <command>pcmanfm</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+</menu>
+
+<menu id="apps-graphics-menu" label="Graphics">
+  <item label="OBS Studio">
+    <action name="Execute">
+      <command>obs</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="LibreSprite">
+    <action name="Execute">
+      <command>flaptak run com.github.libresprite.LibreSprite</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="BlockBench">
+    <action name="Execute">
+      <command>flatpak run net.blockbench.Blockbench</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Minder">
+    <action name="Execute">
+      <command>minder</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+    <item label="Planner">
+    <action name="Execute">
+      <command>flatpak run com.github.alainm23.planner</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+    </item>
+      <item label="Kdenlive">
+    <action name="Execute">
+      <command>kdenlive</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Blender">
+    <action name="Execute">
+      <command>blender</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+    <item label="Darktable">
+    <action name="Execute">
+      <command>darktable</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Krita">
+    <action name="Execute">
+      <command>krita</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+  <item label="Inkscape">
+    <action name="Execute">
+      <command>inkscape</command>
+      <startupnotify>
+        <enabled>yes</enabled>
+      </startupnotify>
+    </action>
+  </item>
+</menu>
+
+<menu id="system-menu" label="System">
+  <item label="Openbox Configuration Manager">
+    <action name="Execute">
+      <command>obconf</command>
+      <startupnotify><enabled>yes</enabled></startupnotify>
+    </action>
+  </item>
+  <separator />
+  <item label="Reconfigure Openbox">
+    <action name="Reconfigure" />
+  </item>
+</menu>
+
+<menu id="root-menu" label="Openbox 3">
+  <separator label="Applications" />
+  <menu id="apps-accessories-menu"/>
+  <menu id="apps-editors-menu"/>
+  <menu id="apps-graphics-menu"/>
+  <menu id="apps-net-menu"/>
+  <menu id="apps-office-menu"/>
+  <menu id="apps-multimedia-menu"/>
+  <menu id="apps-term-menu"/>
+  <menu id="apps-fileman-menu"/>
+  <separator label="System" />
+  <menu id="system-menu"/>
+  <separator />
+  <item label="Shutdown">
+    <action name="Shutdown">
+      <prompt>yes</prompt>
+    </action>
+  </item>
+  <item label="Reboot">
+    <action name="Reboot">
+      <prompt>yes</prompt>
+      </action>
+  </item>
+  <item label="Log Out">
+    <action name="Exit">
+      <prompt>yes</prompt>
+    </action>
+  </item>
+</menu>
+
+</openbox_menu>
