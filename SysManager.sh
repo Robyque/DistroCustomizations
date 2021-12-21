@@ -303,7 +303,7 @@ What?:
     case $a in
         1)ofde_menu ;;
         2)usde_menu ;;
-        3)twm_menu ;;
+        3)owm_menu ;;
         4) install_menu ;;
         5) menu ;;
         6) exit 0 ;;
@@ -311,6 +311,17 @@ What?:
 }
 #<Post install>
 minimal(){
+    #Installing package managers (yay,flatpak,snap)
+    echo "Installing flatpak package manager...."
+    sudo pacman -S flatpak
+    echo "Installing yay AUR package manager...."
+    sudo pacman -S git
+    git clone https://aur.archlinux.org/yay.git
+    cd yay
+    makepkg -si
+    echo "Installing snap package manager...."
+    yay snapd
+
     PKGS=(
         'firefox' #browser
         'alacritty' #terminal
@@ -324,19 +335,24 @@ minimal(){
         'xorg-server'
     )
     for PKG in "${PKGS[@]}"; do
-      echo "Installing: ${PKG} using pacman"
+      echo "Installing: ${PKG} via pacman"
       sudo pacman -S "${PKG}" --noconfirm --needed
     done
     #enabling services
     sudo systemctl enable lightdm.service
     #yay(AUR)
-    #installing yay
-    echo "installing yay...."
-    git clone  https://aur.archlinux.org/yay.git
+    }
+normal(){
+    #Installing package managers (yay,flatpak,snap)
+    echo "Installing flatpak package manager...."
+    sudo pacman -S flatpak
+    echo "Installing yay AUR package manager...."
+    sudo pacman -S git
+    git clone https://aur.archlinux.org/yay.git
     cd yay
     makepkg -si
-}
-normal(){
+    echo "Installing snap package manager...."
+    yay snapd
     #pacman
     PPKGS=(
         'firefox' #browser default
@@ -363,13 +379,13 @@ normal(){
         'qbittorrent'
         'aura-bin'
         'redshift'
-        'minder'
+        'minder' #efficiency app
         'lightdm' #login manager
         'lightdm-gtk-greeter'
-        'flatpak' #pacakge manager
+
     )
     for PPKG in "${PPKGS[@]}"; do
-        echo "Installing: ${PPKG} using pacman"
+        echo "Installing: ${PPKG} via pacman"
         sudo pacman -S "$PPKG" --noconfirm --needed
     done
     #enabling services
@@ -384,15 +400,9 @@ normal(){
 
     )
     for FPKG in "${FPKGS[@]}"; do
-        echo "Installing: ${FPKG} using flatpak"
+        echo "Installing: ${FPKG} via flatpak"
         sudo flatpak install "$FPKG"
     done
-    #yay(AUR)
-    #installing yay
-    echo "installing yay...."
-    git clone  https://aur.archlinux.org/yay.git
-    cd yay
-    makepkg -si
 }
 gameing(){
     #pacman app list
@@ -404,7 +414,7 @@ gameing(){
         'winetricks'
     )
      for PPKG in "${PPKGS[@]}"; do
-        echo "Installing: ${PPKG} using pacman"
+        echo "Installing: ${PPKG} via pacman"
         sudo pacman -S "$PPKG" --noconfirm --needed
      done
 
@@ -413,13 +423,20 @@ gameing(){
     FPKGS=(
       'io.mrarm.mcpelauncher' #minecraft bedrock launcher for linux
       'com.github.Matoking.protontricks' #like winetricks but for proton
-      'com.valvesoftware.Steam' #steam game launcher
+      #'com.valvesoftware.Steam' #steam game launcher
     )
      for FPKG in "${FPKGS[@]}"; do
-        echo "Installing: ${FPKG} using flatpak"
+        echo "Installing: ${FPKG} via flatpak"
         sudo flatpak install "$FPKG"
      done
-
+    #aur app
+     APKGS=(
+         'protonup-git' #proton and wine manager for steam and lutris
+     )
+     for APKG in "${APKGS[@]}"; do
+       echo "Insalling: ${APKG} via yay"
+       yay "${APKG}"
+     done
 }
 art(){
     PKGS=(
@@ -432,10 +449,25 @@ art(){
         'gimp'
     )
      for PKG in "${PKGS[@]}"; do
-        echo "Installing: ${PKG} using pacman"
+        echo "Installing: ${PKG} via pacman"
         sudo pacman -S "$PKG" --noconfirm --needed
      done
+     FPKGS=(
+         'com.github.libresprite.LibreSprite' #LibreSprite pixel art editor
+         'net.blockbench.Blockbench' #Minecraft 3d model maker
+     )
+     for SPKG in "${FPKGS[@]}"; do
+       echo "Installing: ${SPKG} via flatpak"
+       flatpak install "${SPKG}"
+     done
 
+
+}
+efficiency(){
+    echo "installing Minder...."
+    sudo pacman -S minder
+    echo "Installing Planner...."
+    flatpak install com.github.alainm23.planner
 }
 virtualization(){
     PKGS=(
@@ -453,9 +485,10 @@ virtualization(){
         'ebtables'
         'iptables'
         'libguestfs'
+        'docker'
     )
      for PKG in "${PKGS[@]}"; do
-        echo "Installing: ${PKG} using pacman"
+        echo "Installing: ${PKG} via pacman"
         sudo pacman -S "$PKG" --noconfirm --needed
      done
 
@@ -487,19 +520,20 @@ programing(){
 
     )
      for PPKG in "${PPKGS[@]}"; do
-        echo "Installing: ${PPKG} using pacman"
+        echo "Installing: ${PPKG} via pacman"
         sudo pacman -S "$PPKG" --noconfirm --needed
     done
 
-    #flatpak apps
-    FPKGS=(
-        'com.sublimetext.three' #sublime text editor
-        'org.eclipse.Java' #eclipse ide for java
-        'com.visualstudio.code' #visual studio code
+    #Snap apps
+    SPKGS=(
+        'sublime-text' #sublime text editor
+        'eclipse' #eclipse ide for java
+        'code' #visual studio code
+        'code-insiders' #visual studio code insiders
     )
-     for FPKG in "${FPKGS[@]}"; do
-        echo "Installing: ${FPKG} using flatpak"
-        sudo flatpak install "$FPKG"
+     for SPKG in "${SPKGS[@]}"; do
+        echo "Installing: ${SPKG} via snap"
+        sudo snap install "$SPKG --clasic"
     done
 
 }
@@ -511,26 +545,31 @@ terminals(){
         'cool-retro-term'
     )
      for PKG in "${PKGS[@]}"; do
-        echo "Installing: ${PKG} using pacman"
+        echo "Installing: ${PKG} via pacman"
         sudo pacman -S "$PKG" --noconfirm --needed
     done
 
 }
 browsers(){
-    PKGS=(
+    PPKGS=(
+        'firefox'
         'opera'
-        'gvim'
-        'min'
         'vivaldi-stable'
         'chromium'
         'qutebrowser'
         'vimb'
     )
-     for PKG in "${PKGS[@]}"; do
-        echo "Installing: ${PKG} using pacman"
-        sudo pacman -S "$PKG" --noconfirm --needed
+     for PPKG in "${PPKGS[@]}"; do
+        echo "Installing: ${PPKG} via pacman"
+        sudo pacman -S "$PPKG" --noconfirm --needed
     done
-
+     FPKGS=(
+         're.sonny.Tangram'
+     )
+     for FPKG in "${FPKGS[@]}"; do
+       echo "Installing: ${FPKG} via flatpak"
+       flatpak install "${FPKG}"
+     done
 
 }
 unixporn(){
@@ -540,24 +579,41 @@ unixporn(){
         'conky-manager'
     )
      for PPKG in "${PPKGS[@]}"; do
-        echo "Installing: ${PPKG} using pacman"
+        echo "Installing: ${PPKG} via pacman"
         sudo pacman -S "$PPKG" --noconfirm --needed
-    done
-
+     done
+    #uning yay and aur
+    echo "ATENTION!! USING YAY AND AUR"
     #yay(AUR)
     YPKGS=(
-        'cava'
-        'tty-clock'
-        'pipes'
-        'pfetch'
-        'pixterm'
+        'cava' #terminal sound react
+        'tty-clock' #terminal clock
+        'pipes' #terminal pipes
+        'pfetch' #neofetch but small
+        'pixterm' #image to pixelart converter
+        'cbonsai-git' #terminal bonsai
+        'bpytop' #htop clone but prettier
     )
     #all the tools for making linux rice
     #like cava ttk-clock pipes pfetch feh
     for YPKG in "${YPKGS[@]}"; do
-        echo "Install ${YPKG} manually with yay"
+      echo "Installing: ${YPKG} via yay"
+      yay "${YPKG}"
     done
 
+}
+package_managers(){
+    echo "Installing Package managers...."
+     #Installing package managers (yay,flatpak,snap)
+    echo "Installing flatpak package manager...."
+    sudo pacman -S flatpak
+    echo "Installing yay AUR package manager...."
+    sudo pacman -S git
+    git clone https://aur.archlinux.org/yay.git
+    cd yay
+    makepkg -si
+    echo "Installing snap package manager...."
+    yay snapd
 }
 install_menu(){
     echo "
@@ -565,16 +621,18 @@ install_menu(){
 |1) Desktop Enviroment & Window managers menu   |
 |2) Minimal instalation                         |
 |3) Normal instalation                          |
-|4) Gaming apps                                 |
-|5) Art apps                                    |
-|6) Virtualization Apps                         |
-|7) Programing Apps                             |
-|8) Terminals                                   |
-|9) Browsers                                    |
-|10) Linux Rice                                 |
-|11) Back                                       |
-|12) Main menu                                  |
-|13) Exit                                       |
+|4) Package managers(yay,flatpak,snap)          |
+|5) Gaming apps                                 |
+|6) Art apps                                    |
+|7) Virtualization Apps                         |
+|8) Programing Apps                             |
+|9) Terminals                                   |
+|10) Browsers                                   |
+|11) Linux Rice                                 |
+|12) Productivity                               |
+|13) Back                                       |
+|14) Main menu                                  |
+|15) Exit                                       |
 -------------------------------------------------
 What?:
 "
@@ -583,16 +641,18 @@ What?:
         1) de_wm_menu;;
         2) minimal ; install_menu ;;
         3) normal ; install_menu ;;
-        4) gameing ; install_menu ;;
-        5) art ; install_menu ;;
-        6) virtualization ; install_menu ;;
-        7) programing ; install_menu ;;
-        8) terminals ; install_menu ;;
-        9) browsers ; install_menu ;;
-        10) unixporn ; install_menu ;;
-        11) system_menu ;;
-        12) menu ;;
-        13) exit 0 ;;
+        4) package_managers ; install_menu ;;
+        5) gameing ; install_menu ;;
+        6) art ; install_menu ;;
+        7) virtualization ; install_menu ;;
+        8) programing ; install_menu ;;
+        9) terminals ; install_menu ;;
+        10) browsers ; install_menu ;;
+        11) unixporn ; install_menu ;;
+        12) efficiency ; install_menu ;;
+        13) system_menu ;;
+        14) menu ;;
+        15) exit 0 ;;
     esac
 
 }
@@ -772,29 +832,63 @@ winetricks_choice(){
     echo "Starting winetricks....."
     winetricks
 }
+linux_rice_menu(){
+    echo "
+-----------------------------------------
+|1) Conky Manager (Conky-manager)       |
+|2) Cava (cava)                         |
+|3) TTY-Clock (tty-clock)               |
+|4) Pipes (pipes)                       |
+|5) Pfetch (pfetch)                     |
+|6) Cbonsai (cbonsai)                   |
+|7) Cmatrix (cmatrix)                   |
+|8) bpytop (bpytop)                     |
+|9) Back                                |
+|10) Exit                               |
+-----------------------------------------
+What?:
+"
+    read a
+    case $a in
+        1) conky-manager ; linux_rice_menu ;;
+        2) cava ; linux_rice_menu ;;
+        3) tty-clock -Dc ; linux_rice_menu ;;
+        4) pipes ; linux_rice_menu ;;
+        5) pfetch ; linux_rice_menu ;;
+        6) cbonsai ; linux_rice_menu ;;
+        7) cmatrix ; linux_rice_menu ;;
+        8) bpytop ; linux_rice_menu ;;
+        9) menu ;;
+        10) exit 0 ;;
+
+    esac
+}
 menu(){
     echo "
 ------------------------------------
 | TIP:try not to use AUR that much |
 | and if you use it use -bin, -git |
 | or source code for better suport |
-| and don't use yay a lot.	   |
+| and don't use yay a lot.	       |
 | Update the system every 2 days   |
 | not more not less than 2 days or |
-| it will break. 		   |
+| it will break. 		           |
 ------------------------------------
 |1) System menu                    |
 |2) Night light                    |
 |3) Winetricks                     |
-|4) Exit                           |
+|4) Linux Rice                     |
+|5) Exit                           |
 ------------------------------------
+What?:
 "
      read a
      case $a in
          1) system_menu ;;
          2) night_light_menu ;;
          3) winetricks ; menu ;;
-         4) exit 0 ;;
+         4) linux_rice_menu ;;
+         5) exit 0 ;;
      esac
 }
 menu
