@@ -3,9 +3,9 @@
 <openbox_menu xmlns="http://openbox.org/3.4/menu">
 
 <menu id="apps-accessories-menu" label="Accessories">
-  <item label="Calculator">
+  <item label="Nitrogen">
     <action name="Execute">
-      <command>gnome-calculator</command>
+      <command>nitrogen</command>
       <startupnotify>
         <enabled>yes</enabled>
       </startupnotify>
@@ -400,8 +400,11 @@
     </action>
   </item>
   <separator />
-  <item label="Reconfigure Openbox">
-    <action name="Reconfigure" />
+  <item label="Restart Openbox">
+    <action name="Execute">
+      <prompt>yes</prompt>
+      <command>openbox --restart</command>
+    </action>
   </item>
 </menu>
 
