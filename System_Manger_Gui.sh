@@ -909,18 +909,18 @@ install_menu(){
   esac
     #---
     case $installMenu in
-        1) de_wm_menu ;;
-        2) minimal ;;
-        3) normal ;;
-        4) package_managers ;;
-        5) gameing ;;
-        6) art ;;
-        7) virtualization ;;
-        8) programing ;;
-        9) terminals ;;
-        10) browsers ;;
-        11) unixporn ;;
-        12) efficiency ;;
+        1) de_wm_menu ; install_menu ;;
+        2) minimal ; install_menu ;;
+        3) normal ; install_menu ;;
+        4) package_managers ; install_menu ;;
+        5) gameing ; install_menu ;;
+        6) art ; install_menu ;;
+        7) virtualization ; install_menu ;;
+        8) programing ; install_menu ;;
+        9) terminals ; install_menu ;;
+        10) browsers ; install_menu ;;
+        11) unixporn ; install_menu ;;
+        12) efficiency ; install_menu ;;
     esac
 }
 #---
