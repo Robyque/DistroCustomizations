@@ -792,7 +792,7 @@ custom_temperature(){
 }
 default_temperature(){
     echo "Enabling night light with the default value"
-    redshift -O "3000"
+    redshift -O 3000
 }
 enable_night_light(){
     echo "What value do you want to set?(default 3000)(d,c):"
