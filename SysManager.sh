@@ -760,6 +760,54 @@ What?:
         16) exit 0 ;;
     esac
 }
+#===<Battery charging limit>===#
+show_charging_limit(){
+	cat /sys/class/power_supply/BAT0/charge_control_end_threshold
+}
+
+change_charging_limit_default(){
+	
+	if [[ $USER != "root" ]];
+	then
+		echo "Change user to root just for this operation and the switch back to regular user"
+	else
+		echo "Charging limit changed. Swith back to regular user."
+		sudo echo 60 > /sys/class/power_supply/BAT0/charge_control_end_threshold
+	fi
+	
+}
+change_charging_limit_custom(){
+	if [[ $USER != "root" ]];
+	then
+		echo "Change user to root just for this operation and the switch back to regular user"
+	else
+		echo "Enter the value(between 10-100%):"
+		read ch 
+		sudo echo "${ch}" > /sys/class/power_supply/BAT0/charge_control_end_threshold
+		echo "Charging limit changed. Swith back to regular user."
+	fi	
+	
+}
+battery_charge_limit_menu(){
+	echo "
+-------------------------------------------
+|1) Show charging limit                   |
+|2) Change charging limit(default 60%)    |
+|3) Change charging limit(custom)		  |
+|4) Back                                  |
+|5) Exit                                  |
+-------------------------------------------
+What?:
+"
+	read choice 
+	case $choice in
+		1) show_charging_limit ; battery_charge_limit_menu ;;
+		2) change_charging_limit_default ; battery_charge_limit_menu ;;
+		3) change_charging_limit_custom ; battery_charge_limit_menu ;;
+		4) menu ;;
+		5) exit 0 ;;
+	esac	
+}
 #===<System Menu>===#
 system_menu(){
     echo "
@@ -877,9 +925,10 @@ menu(){
 ------------------------------------
 |1) System menu                    |
 |2) Night light                    |
-|3) Winetricks                     |
-|4) Linux Rice                     |
-|5) Exit                           |
+|3) Charging limit                 |
+|4) Winetricks                     |
+|5) Linux Rice                     |
+|6) Exit                           |
 ------------------------------------
 What?:
 "
@@ -887,9 +936,10 @@ What?:
      case $a in
          1) system_menu ;;
          2) night_light_menu ;;
-         3) winetricks ; menu ;;
-         4) linux_rice_menu ;;
-         5) exit 0 ;;
+		 3) battery_charge_limit_menu ;;
+         4) winetricks ; menu ;;
+         5) linux_rice_menu ;;
+         6) exit 0 ;;
      esac
 }
 menu
