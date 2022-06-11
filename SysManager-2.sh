@@ -149,7 +149,7 @@ flatpak_programing=(
 	'org.codeblocks.codeblocks' #Code::Blocks,
 	'org.eclipse.Javascript' #Eclipse IDE for Java Developers,
 )
-
+https://wiki.archlinux.org/title/Command-line_shell#Changing_your_default_shell
 flatpak_gaming_and_emulation=(
     'org.libretro.RetroArch'  #RetroArch
 	'org.polymc.PolyMC' #PolyMC
@@ -175,6 +175,7 @@ flatpak_others=(
 	'md.obsidian.Obsidian' #productivity app and notes
 
 )
+
 #<snap>
 
 
@@ -230,7 +231,7 @@ virt_manager_qemu_setup(){
 
 pacman_install(){
     package=$1
-    sudo pacman -S "@package"
+    sudo pacman -S "$package"
 }
 
 pacman_install_list(){
@@ -243,7 +244,7 @@ pacman_install_list(){
 
 pacman_remove(){
     package=$1
-    sudo pacman -Rnsd "@package"
+    sudo pacman -Rnsd "$package"
 }
 
 pacman_remove_list(){
@@ -279,7 +280,7 @@ flatpak_remove_list(){
 
 yay_install(){
     package=$1
-    yay -S "@package"
+    yay -S "$package"
 }
 
 yay_install_lists(){
@@ -291,7 +292,7 @@ yay_install_lists(){
 
 yay_remove(){
     package=$1
-    yay -Rnsd "@package"
+    yay -Rnsd "$package"
 }
 
 yay_remove_list(){
@@ -303,7 +304,7 @@ yay_remove_list(){
 
 snap_install(){
     package=$1
-    snap install "@package"
+    snap install "$package"
 }
 
 snap_install_list(){
@@ -315,7 +316,7 @@ snap_install_list(){
 
 snap_remove(){
     package=$1
-    snap uninstall "@package"
+    snap uninstall "$package"
 }
 
 snap_remove_list(){
@@ -531,8 +532,33 @@ normal(){
     sudo systemctl enable lightdm.service
 
 }
+# Submenu's for each selection
 
-#package_managers_menu(){}
+
+package_managers_menu(){
+    echo "
+-------------------------------------
+|1) Install                         |
+|2) Uninstall                       |
+|3) Show description                |
+|4) Back                            |
+|5) Main menu                       |
+|6) Exit                            |
+-------------------------------------
+What?:"
+
+read a
+case $a in
+    1) ;;
+    2) ;;
+    3) ;;
+    4) clear_terminal ; install_menu;;
+    5) clear_terminal ; menu ;;
+    6) exit 0 ;;
+
+esac
+
+}
 
 #gaming_menu(){}
 
