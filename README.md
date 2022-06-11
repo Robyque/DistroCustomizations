@@ -1,1 +1,1 @@
-Simple script with a lot of functions.
+this repo contains a script for easy system maintanance and customizations and some dot files and wallpapers
