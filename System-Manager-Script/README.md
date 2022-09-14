@@ -1,3 +1,6 @@
-<h2>Project Screenshots:</h2>
+<h2>System Manager Script</h2>
 
-<img src="https://i.imgur.com/pkun8tE.png" alt="project-screenshot" width="600" height="300/">
+<p>This script has the basic commands for system maintenance</p>
+<img src="https://i.imgur.com/wgpZzCK.png" alt="project-screenshot" width="600" height="300/">
+
+<p></p>
