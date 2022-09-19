@@ -714,6 +714,13 @@ enable_internal_keyboard(){
     echo 'Internal keyboard now enabled'
 }
 
+update_keyrings(){
+
+  sudo pacman-key --init
+  sudo pacman-key --populate
+
+
+}
 system_maintanance_menu(){
   option=(
     'Update pacman'
@@ -727,6 +734,7 @@ system_maintanance_menu(){
     'Delete orphan packages'
     'Clean cache'
     'Clean journal'
+    'Update keyrings'
     'Disable internal keyboard'
     'Enable internal keyboard'
     'Swap Menu'
@@ -748,12 +756,13 @@ system_maintanance_menu(){
         9) clear_terminal ; remove_orphan_packages; system_maintanance_menu ;;
         10) clear_terminal ; clean_cache; system_maintanance_menu ;;
         11) clear_terminal ; clean_journal ; system_maintanance_menu ;;
-        12) clear_terminal ; disable_internal_keyboard ; system_maintanance_menu ;;
-        13) clear_terminal ; enable_internal_keyboard ; system_maintanance_menu ;;
-        14) clear_terminal ; swapp_menu ;;
-        15) clear_terminal ; system_menu ;;
-        16) clear_terminal ; menu ;;
-        17) exit_message ;;
+        12) clear_terminal ; update_keyrings ; system_maintanance_menu ;;
+        13) clear_terminal ; disable_internal_keyboard ; system_maintanance_menu ;;
+        14) clear_terminal ; enable_internal_keyboard ; system_maintanance_menu ;;
+        15) clear_terminal ; swapp_menu ;;
+        16) clear_terminal ; system_menu ;;
+        17) clear_terminal ; menu ;;
+        18) exit_message ;;
         *) clear_terminal ; print 'Invalid option' ; system_maintanance_menu ;;
     esac
 }
@@ -961,11 +970,12 @@ night_light_menu(){
 
 # ========================
 # ===<The main menu>===
-
+system_update_check="check"
 
 menu(){
-    print " \n Checking for available updates...."
+    if [ "$system_update_check" == "check" ]; then
     #check system updates
+    print " \n Checking for available updates...."
 
     if ! pacman_updates=$(checkupdates 2> /dev/null | wc -l ); then
         pacman_updates=0
@@ -978,7 +988,11 @@ menu(){
     if ! flatpak_updates=$(flatpak remote-ls  --updates | wc -l); then
         flatpak_updates=0
     fi
-
+    else
+      pacman_updates="Skipping"
+      yay_updates="Skipping"
+      flatpak_updates="Skipping"
+    fi
     clear_terminal
     #checking if the system has the necessars packaage managers installed
     check_flatpak=$(check_command "flatpak")
@@ -998,19 +1012,11 @@ menu(){
     print " yay available updates: $yay_updates"
     print " flatpak available updates: $flatpak_updates"
 
-
-
-
-    print '\n TIP:try not to use AUR that much and if you use it use -bin,
-    -git or source code for better suport and don`t use yay a lot.
-    Update the system every 2 days not more not less than 2 days or it will break.'
-
     option=(
         'System Menu'
         'Night Light'
         'Charging Limit'
         'Winetricks'
-        'Linux Rice'
         'Exit'
     )
      generate_menu "${option[@]}"
@@ -1018,13 +1024,41 @@ menu(){
      case $a in
          1) clear_terminal ; system_menu ;;
          2) clear_terminal ; night_light_menu ;;
-		 3) clear_terminal ; battery_charge_limit_menu ;;
+		     3) clear_terminal ; battery_charge_limit_menu ;;
          4) clear_terminal ; winetricks ; menu ;;
-         5) clear_terminal ; linux_rice_menu ;;
-         6) exit_message ;;
+         5) exit_message ;;
          *) clear_terminal ; print " Invalid option"; menu ;;
      esac
 }
 
-menu
+
+# =====================
+# Making getop for passing arguments to script
+usage(){
+	print "
+  Usage: SystemManager
+	     -h | --help   				        shows this menu
+	     -s | --skip-update-check			skips the checking packages available updates
+       -d | --default               goes default settings"
+	exit 2
+}
+parsed_arguments=$(getopt -a -n SysManager -o hsd --long help,skip-update-check,default -- "$@")
+valid_arguments=$?
+if [ "$valid_arguments" != "0" ]; then
+	menu
+fi
+eval set -- "$parsed_arguments"
+while :
+do
+	case "$1" in
+		-h | --help) usage ; shift ;;
+		-s | --skip-update-check)  system_update_check="skip" ; menu ; shift ;;
+    -d | --default) menu; shift;;
+		--) shift; break ;;
+    *) echo "something went wrong" ; shift;;
+	esac
+done
+
+
+
 # =====================
