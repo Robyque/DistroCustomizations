@@ -1044,7 +1044,7 @@ menu(){
     check_paru=$(check_command "paru")
     check_aura=$(check_command "aura")
 
-    printf "Recomanded package managers to be installed
+    printf "Recommended package managers to be installed
     \n Installed Package Managers \n"
 
     print " Yay: $check_yay"
