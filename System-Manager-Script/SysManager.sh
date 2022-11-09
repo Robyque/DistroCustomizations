@@ -722,6 +722,14 @@ update_keyrings(){
 
 }
 system_maintanance_menu(){
+
+  # setting update in 2 days from now for better stability
+  # recomanded update date
+  rud=$(date +%F -d "+2 days")
+  rcudfp=~/.config/sysmanager_config/recomanded_update_day.txt
+  echo "$rud" > "${rcudfp}"
+
+
   option=(
     'Update pacman'
     'Update yay'
@@ -908,6 +916,7 @@ system_menu(){
   option=(
   'Installer Menu'
   'System Maintanance'
+  'Change Shell'
   'Back'
   'Exit'
   )
@@ -916,8 +925,9 @@ system_menu(){
     case $a in
         1) clear_terminal ; install_menu ;;
         2) clear_terminal ; system_maintanance_menu ;;
-        3) clear_terminal ; menu ;;
-        4) exit_message ;;
+        3) clea wvr_terminal ; menu ;;
+        4) menu ;;
+        5) exit_message ;;
         *) clear_terminal ; print 'Invalid option' ; system_menu ;;
     esac
 }
@@ -967,12 +977,46 @@ night_light_menu(){
         *) clear_terminal ; print 'Invalid option' ; night_light_menu ;;
     esac
 }
+setup_config_folder(){
+    # checking if the config folder exists
+    config_path=~/.config/sysmanager_config/
 
+    if [ ! -d "$config_path" ]; then
+        mkdir "$config_path"
+        touch "${config_path}/recomanded_update_day.txt"
+    fi
+}
+check_recomanded_update_day(){
+    # long name
+    # recomanded update day folder path
+    rcudfp=~/.config/sysmanager_config/recomanded_update_day.txt
+    current_date=$(date +%F)
+    info=$(cat $rcudfp)
+    if [ -f "$rcudfp" ];
+    then
+        if [ -s "$rcudfp" ];
+        then
+            if [ "$current_date" == "$info" ];
+            then
+                echo "Update Required"
+            else
+                echo "$info"
+            fi
+        else
+            echo "No date found"
+        fi
+    else
+        echo "Data not found"
+        touch "$rcudfp"
+    fi
+}
 # ========================
 # ===<The main menu>===
 system_update_check="check"
+update_date=$(check_recomanded_update_day)
 
 menu(){
+    setup_config_folder
     if [ "$system_update_check" == "check" ]; then
     #check system updates
     print " \n Checking for available updates...."
@@ -994,20 +1038,21 @@ menu(){
       flatpak_updates="Skipping"
     fi
     clear_terminal
-    #checking if the system has the necessars packaage managers installed
+    #checking if the system has the necessars package managers installed
     check_flatpak=$(check_command "flatpak")
     check_yay=$(check_command "yay")
     check_paru=$(check_command "paru")
     check_aura=$(check_command "aura")
 
-    printf "If one of the package managers it's not installed please go and install the needed package managers.
+    printf "Recomanded package managers to be installed
     \n Installed Package Managers \n"
 
-    echo " Yay: $check_yay"
-    echo " Paru: $check_paru"
+    print " Yay: $check_yay"
+    print " Paru: $check_paru"
     print " Flatpak: $check_flatpak"
     print " Aura: $check_aura \n"
 
+    print " Update Manager: ${update_date}"
     print " pacman available updates: $pacman_updates"
     print " yay available updates: $yay_updates"
     print " flatpak available updates: $flatpak_updates"
@@ -1033,32 +1078,36 @@ menu(){
 
 
 # =====================
-# Making getop for passing arguments to script
+# Making argument parsing
+Params=""
 usage(){
 	print "
   Usage: SystemManager
 	     -h | --help   				        shows this menu
-	     -s | --skip-update-check			skips the checking packages available updates
-       -d | --default               goes default settings"
+	     -s | --skip-update-check			    skips the checking packages available updates
+       -d | --default                           goes default settings"
 	exit 2
 }
-parsed_arguments=$(getopt -a -n SysManager -o hsd --long help,skip-update-check,default -- "$@")
-valid_arguments=$?
-if [ "$valid_arguments" != "0" ]; then
-	menu
+if [[ $# -eq 0 ]]; then
+    menu
+
+else
+    case $1 in
+        -h | --help)
+            usage
+            shift
+            ;;
+        -s | --skip-update-check)
+            system_update_check="skip"
+            menu
+            shift
+            ;;
+        -* | --*)
+            print "Unknown option $1"
+            exit 1
+            ;;
+    esac
 fi
-eval set -- "$parsed_arguments"
-while :
-do
-	case "$1" in
-		-h | --help) usage ; shift ;;
-		-s | --skip-update-check)  system_update_check="skip" ; menu ; shift ;;
-    -d | --default) menu; shift;;
-		--) shift; break ;;
-    *) echo "something went wrong" ; shift;;
-	esac
-done
-
-
+eval set -- "$Params"
 
 # =====================
