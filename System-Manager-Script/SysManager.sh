@@ -725,7 +725,7 @@ system_maintanance_menu(){
 
   # setting update in 2 days from now for better stability
   # recomanded update date
-  rud=$(date +%F -d "+2 days")
+  rud=$(date +%d/%m/%Y -d "+2 days")
   rcudfp=~/.config/sysmanager_config/recomanded_update_day.txt
   echo "$rud" > "${rcudfp}"
 
