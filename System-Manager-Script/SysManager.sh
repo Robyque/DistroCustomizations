@@ -451,8 +451,8 @@ minimal(){
 
 
 normal(){
-    sudo pacman -S git
     PPKGS=(
+        'git'
         'firefox' #browser default
         'alacritty' #default terminal
         'dolphin' #default file manager
@@ -505,10 +505,10 @@ package_managers_install_menu(){
     read a
 
     case $a in
-        1) clear_terminal ; pacman_install "flatpak" ;;
-        2) clear_terminal ; yay_setup ; yay_install "aura-bin";;
-        3) clear_terminal ; paru_setup;;
-        4) clear_terminal ; yay_install "snapd" ;;
+        1) clear_terminal ; pacman_install "flatpak" ; package_managers_install_menu ;;
+        2) clear_terminal ; yay_setup ; yay_install "aura-bin" ; package_managers_install_menu ;;
+        3) clear_terminal ; paru_setup ; package_managers_install_menu ;;
+        4) clear_terminal ; yay_install "snapd" ; package_managers_install_menu ;;
         5) clear_terminal ; package_managers_menu ;;
         6) clear_terminal ; menu ;;
         7) exit_message ;;
@@ -533,10 +533,10 @@ package_managers_uninstall_menu(){
     read a
 
     case $a in
-        1) clear_terminal ; pacman_remove "flapak" ;;
-        2) clear_terminal ; pacman_remove "yay" ;;
-        3) clear_terminal ; pacman_remove "paru" ;;
-        4) clear_terminal ; pacman_remove "snapd" ;;
+        1) clear_terminal ; pacman_remove "flapak" ; package_managers_uninstall_menu ;;
+        2) clear_terminal ; pacman_remove "yay" ; package_managers_uninstall_menu ;;
+        3) clear_terminal ; pacman_remove "paru" ; package_managers_uninstall_menu ;;
+        4) clear_terminal ; pacman_remove "snapd" ; package_managers_uninstall_menu ;;
         5) clear_terminal ; package_managers_menu ;;
         6) clear_terminal ; menu ;;
         7) exit_message ;;
@@ -721,16 +721,81 @@ update_keyrings(){
 
 
 }
-system_maintanance_menu(){
 
+
+array_to_string() {
+    local array=("$@")
+    local delimiter=","  # You can choose any delimiter you like
+    local array_string="${array[*]}"  # Convert the array to a string with elements separated by the delimiter
+    echo "$array_string"
+}
+
+# Function to convert a string to an array
+string_to_array() {
+    local string="$1"
+    local delimiter=","  # Should match the delimiter used when converting to a string
+    IFS="$delimiter" read -ra array <<< "$string"  # Split the string into an array using the delimiter
+    echo "${array[@]}"
+}
+
+# global variables and custom functions for this menu
+min_updates_done=3
+declare -a option_used=()
+
+add_option(){
+    local option="$1"
+    if [ -z "${option_used[@]}" ]; then
+        option_used+=("$option")
+    else
+        if [[ ! "${option_used[@]}" =~ "$option" ]];then
+            option_used+=("$option")
+        fi
+    fi
+}
+
+run_commands(){
+    #local commands="$@"
+    #for cmd in "${commands[@]}"; do
+    for cmd in "$@"; do
+        # optional just for aestetics
+        clear_terminal
+        echo "running command: $cmd"
+        eval "$cmd"
+    done
+}
+set_next_update_day(){
   # setting update in 2 days from now for better stability
   # recomanded update date
   rud=$(date +%d/%m/%Y -d "+2 days")
   rcudfp=~/.config/sysmanager_config/recomanded_update_day.txt
   echo "$rud" > "${rcudfp}"
+  echo "the next update day will be: $rud"
+  sleep 1
+}
 
+run_chosed_option(){
+    local menu="$1"
+    local current_option="$2"
+    local stringified_commands_array="$3"
+    local commands_array=($(string_to_array "$stringified_commands_array"))
+    if (("${#option_used[@]}" != 0)); then
+        local stringified_used_options=$(array_to_string "${option_used[@]}")
+        if check_if_exists "$stringified_used_options" "$current_option"; then
+             echo "skipping...update already done"
+             eval "$menu"
+        else
+             add_option "$current_option"
+             run_commands "${commands_array[@]}" "$menu"
+        fi
+    else
+        add_option "$current_option"
+        run_commands "${commands_array[@]}" "$menu"
+    fi
+}
 
-  option=(
+system_maintanance_menu(){
+
+  local option=(
     'Update pacman'
     'Update yay'
     'Update flatpak'
@@ -748,36 +813,40 @@ system_maintanance_menu(){
     'Swap Menu'
     'Back'
     'Main menu'
+    'Reboot'
     'Exit'
   )
     generate_menu "${option[@]}"
     read a
+    local current_option=("${option[$a-1]}")
+
+    if (("${#option_used[@]}" == "$min_updates_required" ));
+    then
+        set_next_update_day
+    fi
+
     case $a in
-        1) clear_terminal ; update_pacman; system_maintanance_menu ;;
-        2) clear_terminal ; update_yay; system_maintanance_menu ;;
-        3) clear_terminal ; update_flatpak; system_maintanance_menu ;;
-        4) clear_terminal ; check_systemd; system_maintanance_menu ;;
-        5) clear_terminal ; log_files_check; system_maintanance_menu ;;
-        6) clear_terminal ; delete_pacman_cache; system_maintanance_menu ;;
-        7) clear_terminal ; delete_yay_cache; system_maintanance_menu ;;
-        8) clear_terminal ; delete_unwanted_dependencies; system_maintanance_menu ;;
-        9) clear_terminal ; remove_orphan_packages; system_maintanance_menu ;;
-        10) clear_terminal ; clean_cache; system_maintanance_menu ;;
-        11) clear_terminal ; clean_journal ; system_maintanance_menu ;;
-        12) clear_terminal ; update_keyrings ; system_maintanance_menu ;;
-        13) clear_terminal ; disable_internal_keyboard ; system_maintanance_menu ;;
-        14) clear_terminal ; enable_internal_keyboard ; system_maintanance_menu ;;
-        15) clear_terminal ; swapp_menu ;;
-        16) clear_terminal ; system_menu ;;
-        17) clear_terminal ; menu ;;
-        18) exit_message ;;
+        1) run_chosed_option "system_maintanance_menu" "$current_option" "update_pacman";;
+        2) run_chosed_option "system_maintanance_menu" "$current_option" "update_yay";;
+        3) run_chosed_option "system_maintanance_menu" "$current_option" "update_flatpak";;
+        4) run_chosed_option "system_maintanance_menu" "$current_option" "check_systemd";;
+        5) run_chosed_option "system_maintanance_menu" "$current_option" "log_files_check";;
+        6) run_chosed_option "system_maintanance_menu" "$current_option" "delete_pacman_cache";;
+        7) run_chosed_option "system_maintanance_menu" "$current_option" "delete_yay_cache";;
+        8) run_chosed_option "system_maintanance_menu" "$current_option" "delete_unwanted_dependencies";;
+        9) run_chosed_option "system_maintanance_menu" "$current_option" "remove_orphan_packages";;
+        10) run_chosed_option "system_maintanance_menu" "$current_option" "clean_cache";;
+        11) run_chosed_option "system_maintanance_menu" "$current_option" "clean_journal";;
+        12) run_chosed_option "system_maintanance_menu" "$current_option" "update_keyrings";;
+        13) clear_terminal ; swap_menu ;;
+        14) clear_terminal ; system_menu ;;
+        15) clear_terminal ; menu ;;
+        16) clean_terminal ; print "rebooting to apply updates" ; reboot ;;
+        17) exit_message;;
         *) clear_terminal ; print 'Invalid option' ; system_maintanance_menu ;;
+
     esac
 }
-
-# ===============================this repo contains a script for easy system maintanance and customizations and some dot files and wallpapers
-
-
 
 # ===<Battery charging limit menu>===
 
@@ -941,10 +1010,12 @@ custom_temperature(){
     echo "Enabling night light with value: ${c}k"
     redshift -O "${c}"
 }
+
 default_temperature(){
     echo "Enabling night light with the default value"
     redshift -O 3000
 }
+
 enable_night_light(){
     printf "What value do you want to set?(default 3000)\n[(d)efault/(c)ustom/(b)ack]:"
     read a
@@ -956,10 +1027,12 @@ enable_night_light(){
     esac
 
 }
+
 disable_night_light(){
     echo "Disabling night light"
     redshift -x
 }
+
 night_light_menu(){
     option=(
         'Enable Night Light'
@@ -977,6 +1050,7 @@ night_light_menu(){
         *) clear_terminal ; print 'Invalid option' ; night_light_menu ;;
     esac
 }
+
 setup_config_folder(){
     # checking if the config folder exists
     config_path=~/.config/sysmanager_config/
@@ -986,6 +1060,7 @@ setup_config_folder(){
         touch "${config_path}/recomanded_update_day.txt"
     fi
 }
+
 check_recomanded_update_day(){
     # long name
     # recomanded update day folder path
@@ -1014,6 +1089,11 @@ check_recomanded_update_day(){
 # ===<The main menu>===
 system_update_check="check"
 update_date=$(check_recomanded_update_day)
+
+easy_full_system_update(){
+    echo "easy full system update will start...some user input may be required"
+    run_commands clear_terminal update_pacman update_yay update_flatpak delete_pacman_cache delete_yay_cache delete_unwanted_dependecies remove_orphan_packages clean_cache clear_journal set_next_update_day menu
+}
 
 menu(){
     setup_config_folder
@@ -1062,6 +1142,7 @@ menu(){
         'Night Light'
         'Charging Limit'
         'Winetricks'
+        'Easy Update'
         'Exit'
     )
      generate_menu "${option[@]}"
@@ -1069,9 +1150,10 @@ menu(){
      case $a in
          1) clear_terminal ; system_menu ;;
          2) clear_terminal ; night_light_menu ;;
-		     3) clear_terminal ; battery_charge_limit_menu ;;
+		 3) clear_terminal ; battery_charge_limit_menu ;;
          4) clear_terminal ; winetricks ; menu ;;
-         5) exit_message ;;
+		 5) clear_terminal ; easy_full_system_update ;;
+         6) exit_message ;;
          *) clear_terminal ; print " Invalid option"; menu ;;
      esac
 }
@@ -1083,9 +1165,9 @@ Params=""
 usage(){
 	print "
   Usage: SystemManager
-	     -h | --help   				        shows this menu
-	     -s | --skip-update-check			    skips the checking packages available updates
-       -d | --default                           goes default settings"
+	     -h | --help   				              shows this menu
+	     -s | --skip-update-check			      skips the checking packages available updates
+         -d | --default                           goes default settings"
 	exit 2
 }
 if [[ $# -eq 0 ]]; then
